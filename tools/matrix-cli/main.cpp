@@ -1,0 +1,9 @@
+#include <iostream>
+#include <matrix-tools/MatrixFileParser.h>
+
+int main(int argc, char *argv[])
+{
+    std::cout << "Hello CMake!" << std::endl;
+    return 0;
+}
+

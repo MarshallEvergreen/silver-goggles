@@ -1,6 +1,6 @@
 
 class MatrixFileParser {
 public:
-    void Blah();
+    bool Blah();
 };
 

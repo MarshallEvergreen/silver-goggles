@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(matrix-tools-lib)
+project(matrix-tools)
+
+add_subdirectory(test)
 
 add_library(${PROJECT_NAME} STATIC
         src/MatrixFileParser.cpp

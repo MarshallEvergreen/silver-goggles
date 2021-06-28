@@ -4,4 +4,6 @@ project(matrix-cli)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC matrix-tools-lib)
+target_link_libraries(
+        ${PROJECT_NAME}
+        matrix-tools)

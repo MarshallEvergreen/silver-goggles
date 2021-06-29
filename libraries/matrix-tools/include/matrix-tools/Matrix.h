@@ -6,7 +6,7 @@ class Matrix {
 public:
     explicit Matrix(Elements elements);
 
-    bool IsSquare();
+    bool IsSquare() const;
     double Determinant();
     Matrix Inverse();
 

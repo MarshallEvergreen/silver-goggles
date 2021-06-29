@@ -8,7 +8,7 @@ Matrix::Matrix(Elements elements) {
     _columns = _elements[0].size();
 }
 
-bool Matrix::IsSquare() {
+bool Matrix::IsSquare() const {
     return _rows == _columns;
 }
 

@@ -5,7 +5,8 @@ project(matrix-tools)
 add_subdirectory(test)
 
 add_library(${PROJECT_NAME} STATIC
-        src/MatrixFileParser.cpp
+        src/Matrix.cpp src
+        src/MatrixExceptions.cpp
         )
 
 target_include_directories(${PROJECT_NAME}

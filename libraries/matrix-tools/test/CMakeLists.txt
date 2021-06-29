@@ -7,9 +7,11 @@ project("${Library}-test")
 
 
 add_executable(${PROJECT_NAME}
-        someTests.cpp
-        )
+        NoZeroElementsMatrix2x2Tests.cpp
+        NonSquareMatrixTests.cpp
+        DeterminantZeroSquareMatrixTests.cpp NoZeroElementsMatrix3x3Tests.cpp)
 
 target_link_libraries(${PROJECT_NAME}
         gtest_main
+        gmock_main
         ${Library})

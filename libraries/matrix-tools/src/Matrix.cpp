@@ -42,11 +42,13 @@ Matrix Matrix::Inverse() {
 
 void Matrix::ReduceToUpperTriangular(Elements &elements) const {
 
-    for (size_t i = 0; i < _rows - 1; i++) {
-        if (elements[i + 1][0] != 0.0) {
-            const auto &factor = elements[i + 1][0] / elements[0][0];
-            for (size_t j = 0; j < _columns; j++) {
-                elements[i + 1][j] = elements[i + 1][j] - (factor * elements[0][j]);
+    for (size_t i = 0; i < _columns - 1; i++) {
+        for (size_t j = i + 1; j < _rows; j++) {
+            if (elements[j][i] != 0.0) {
+                const auto &factor = elements[j][i] / elements[i][i];
+                for (size_t k = 0; k < _columns; k++) {
+                    elements[j][k] = elements[j][k] - (factor * elements[i][k]);
+                }
             }
         }
     }

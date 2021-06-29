@@ -16,7 +16,7 @@ struct NoZeroElementsMatrix3x3Tests : public Test {
 
 TEST_F(NoZeroElementsMatrix3x3Tests, ostream_isFormattedNicely) {
 
-    auto expectedOutput ="| 5 2 3 |\n| 4 5 6 |\n| 7 8 9 |\n";
+    auto expectedOutput = "| 5 2 3 |\n| 4 5 6 |\n| 7 8 9 |\n";
     std::ostringstream out;
     out << matrix;
     EXPECT_EQ(expectedOutput, out.str());
@@ -29,17 +29,17 @@ TEST_F(NoZeroElementsMatrix3x3Tests, IsSquare_ReturnsTrue_WhenMatrixIsSquareMatr
 
 TEST_F(NoZeroElementsMatrix3x3Tests, Determinant_CalculatesTheDetermiant_ForSquareMatrix) {
 
-    EXPECT_THAT(matrix.Determinant(), DoubleEq(-12.0));
+    EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
 }
 
 TEST_F(NoZeroElementsMatrix3x3Tests, Determinant_CanBeCalledMultipleTimesCorrectly) {
 
-    EXPECT_THAT(matrix.Determinant(), DoubleEq(-12.0));
-    EXPECT_THAT(matrix.Determinant(), DoubleEq(-12.0));
+    EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
+    EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
 }
 
 TEST_F(NoZeroElementsMatrix3x3Tests, Inverse_CanBeCalledMultipleTimesCorrectly) {
 
-    EXPECT_THAT(matrix.Determinant(), DoubleEq(-47.0));
-    EXPECT_THAT(matrix.Determinant(), DoubleEq(-47.0));
+    EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
+    EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
 }

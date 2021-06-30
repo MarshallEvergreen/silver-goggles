@@ -1,3 +1,4 @@
+#include <optional>
 #include <ostream>
 #include <vector>
 
@@ -20,9 +21,13 @@ namespace SilverGoogles::MatrixTools {
         size_t _columns;
         Elements _elements;
 
-        void ReduceToUpperTriangular(Elements& elements) const;
-        void ReduceToLowerTriangular(Elements& elements) const;
-        void ReduceToIdentityMatrix(Elements& elements) const;
+        void ReduceRow(Elements& elements, size_t row, size_t column, double factor) const;
+
+        void DeterminantReduceToUpperTriangular(Elements& elements) const;
+
+        void InvertReduceToUpperTriangular(Elements& elements, Elements& adjointElements) const;
+        void InvertReduceToLowerTriangular(Elements& elements, Elements& adjointElements) const;
+        void InvertReduceToIdentityMatrix(Elements& elements, Elements& adjointElements) const;
 
         [[nodiscard]] Elements CreateIdentityElements() const;
     };

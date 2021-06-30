@@ -26,7 +26,7 @@ namespace SilverGoogles::MatrixTools {
         // Take a copy here to not mutate the elements for future use.
         auto elements = _elements;
 
-        ReduceToUpperTriangular(elements);
+        DeterminantReduceToUpperTriangular(elements);
 
         double determinant = 1.0;
         for (size_t i = 0; i < _rows; i++)
@@ -52,51 +52,67 @@ namespace SilverGoogles::MatrixTools {
         auto elements = _elements;
         auto identity = CreateIdentityElements();
 
-        ReduceToUpperTriangular(elements);
-        ReduceToLowerTriangular(elements);
-        ReduceToIdentityMatrix(elements);
+        InvertReduceToUpperTriangular(elements, identity);
+        InvertReduceToLowerTriangular(elements, identity);
+        InvertReduceToIdentityMatrix(elements, identity);
 
-        auto inverseMatrix = Matrix{elements};
+        auto inverseMatrix = Matrix{identity};
         return inverseMatrix;
     }
 
-    void Matrix::ReduceToUpperTriangular(Elements& elements) const
+    void Matrix::ReduceRow(Elements& elements, size_t row, size_t column, double factor) const
     {
-        for (size_t i = 0; i < _columns - 1; i++)
+        for (size_t k = 0; k < _columns; k++)
         {
-            for (size_t j = i + 1; j < _rows; j++)
+            elements[row][k] = elements[row][k] - (factor * elements[column][k]);
+        }
+    }
+
+    void Matrix::DeterminantReduceToUpperTriangular(Elements& elements) const
+    {
+        for (size_t column = 0; column < _columns - 1; column++)
+        {
+            for (size_t row = column + 1; row < _rows; row++)
             {
-                if (elements[j][i] != 0.0)
+                if (elements[row][column] != 0.0)
                 {
-                    const auto& factor = elements[j][i] / elements[i][i];
-                    for (size_t k = 0; k < _columns; k++)
-                    {
-                        elements[j][k] = elements[j][k] - (factor * elements[i][k]);
-                    }
+                    const auto& factor = elements[row][column] / elements[column][column];
+                    ReduceRow(elements, row, column, factor);
                 }
             }
         }
     }
 
-    void Matrix::ReduceToLowerTriangular(Elements& elements) const
+    void Matrix::InvertReduceToUpperTriangular(Elements& elements, Elements& adjointElements) const
     {
-        for (size_t i = _columns - 1; _columns > i; i--)
+        for (size_t column = 0; column < _columns - 1; column++)
         {
-            for (size_t j = i - 1; _rows > j; j--)
+            for (size_t row = column + 1; row < _rows; row++)
             {
-                if (elements[j][i] != 0.0)
+                if (elements[row][column] != 0.0)
                 {
-                    const auto& factor = elements[j][i] / elements[i][i];
-                    for (size_t k = 0; k < _columns; k++)
-                    {
-                        elements[j][k] = elements[j][k] - (factor * elements[i][k]);
-                    }
+                    const auto& factor = elements[row][column] / elements[column][column];
+                    ReduceRow(elements, row, column, factor);
+                    ReduceRow(adjointElements, row, column, factor);
                 }
             }
         }
     }
 
-    void Matrix::ReduceToIdentityMatrix(Elements& elements) const
+    void Matrix::InvertReduceToLowerTriangular(Elements& elements, Elements& adjointElements) const
+    {
+        for (size_t column = _columns - 1; _columns > column; column--)
+        {
+            for (size_t row = column - 1; _rows > row; row--)
+            {
+                const auto& factor = elements[row][column] / elements[column][column];
+                ReduceRow(elements, row, column, factor);
+                ReduceRow(adjointElements, row, column, factor);
+            }
+        }
+    }
+
+    void Matrix::InvertReduceToIdentityMatrix(Elements& elements, Elements& adjointElements) const
     {
         for (size_t i = 0; i < _rows; i++)
         {
@@ -104,6 +120,7 @@ namespace SilverGoogles::MatrixTools {
             for (size_t k = 0; k < _columns; k++)
             {
                 elements[i][k] = (factor * elements[i][k]);
+                adjointElements[i][k] = (factor * adjointElements[i][k]);
             }
         }
     }

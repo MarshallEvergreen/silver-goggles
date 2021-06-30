@@ -3,6 +3,7 @@
 #include <matrix-tools/MatrixExceptions.h>
 
 using namespace ::testing;
+using namespace ::SilverGoogles::MatrixTools;
 
 struct NoZeroElementsMatrix3x3Tests : public Test {
 
@@ -38,8 +39,18 @@ TEST_F(NoZeroElementsMatrix3x3Tests, Determinant_CanBeCalledMultipleTimesCorrect
     EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
 }
 
-TEST_F(NoZeroElementsMatrix3x3Tests, Inverse_CanBeCalledMultipleTimesCorrectly) {
+TEST_F(NoZeroElementsMatrix3x3Tests, Inverse_CalculatesTheInverse_ForSquareMatrix) {
 
     EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
     EXPECT_THAT(matrix.Determinant(), DoubleNear(-12.0, 0.0001));
+}
+
+TEST_F(NoZeroElementsMatrix3x3Tests, Inverse_CanBeCalledMultipleTimesCorrectly) {
+
+    auto inverseMatrix = matrix.Inverse();
+
+    EXPECT_THAT(inverseMatrix[0][0], DoubleNear(-0.1914893617, 0.0001));
+    EXPECT_THAT(inverseMatrix[0][1], DoubleNear(0.14893617021, 0.0001));
+    EXPECT_THAT(inverseMatrix[1][0], DoubleNear(0.17021276595, 0.0001));
+    EXPECT_THAT(inverseMatrix[1][1], DoubleNear(0.02127659574, 0.0001));
 }

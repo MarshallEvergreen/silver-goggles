@@ -3,6 +3,7 @@
 #include <matrix-tools/MatrixExceptions.h>
 
 using namespace ::testing;
+using namespace ::SilverGoogles::MatrixTools;
 
 struct NonSquareMatrixTests : public Test {
 

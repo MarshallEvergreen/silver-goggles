@@ -1,2 +1,2 @@
 # silver-goggles
-C++ Physics and Maths playground
+C++ Physics and Maths playground!
